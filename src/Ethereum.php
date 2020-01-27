@@ -435,7 +435,12 @@ class Ethereum extends EthereumStatic implements Web3Interface
                 // If $val not an array, we handle a change of
                 // eth_newBlockFilter (block hashes) -> returns [D32] or
                 // eth_newPendingTransactionFilter (transaction hashes) -> returns [D32]
-                $return[] = new EthD32($val);
+                if(!$val instanceof EthD32){
+                  $return[] = new EthD32($val);
+                }
+                else{
+                  $return[] = $val;
+                }
             }
 
         }
@@ -490,7 +495,7 @@ class Ethereum extends EthereumStatic implements Web3Interface
                         if (is_array($sub_val)) {
                             $sub_values[] = self::arrayToComplexType($val_class, $sub_val);
                         } else {
-                            $sub_values[] = new $val_class($sub_val);
+                            $sub_values[] = new $val_class(new EthD32($sub_val));
                         }
                     }
                     $class_values[] = $sub_values;

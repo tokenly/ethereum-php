@@ -186,7 +186,9 @@ class EthD extends EthDataType
         $val = $this->ensureHexPrefix($val);
 
         if ($this->validateHexString($val)) {
-
+            if(is_object($val)){
+              $val = $val->value;
+            }
             // All Hex strings are lowercase.
             $val = strtolower($val);
             if (method_exists($this, 'validateLength')) {
@@ -216,6 +218,9 @@ class EthD extends EthDataType
      */
     public function validateHexString($val)
     {
+      if(is_object($val)){
+        $val = $val->value;
+      }
         if ($val === '0x') {
             $val = '0x0';
         }

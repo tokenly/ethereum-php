@@ -238,6 +238,9 @@ abstract class EthereumStatic
      */
     public static function hasHexPrefix($str)
     {
+        if(is_object($str)){
+          $str = $str->value;
+        }
         return substr($str, 0, 2) === '0x';
     }
 
